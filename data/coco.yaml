@@ -7,6 +7,7 @@
 train: /root/2022IEEEUV-preliminary/data/train.txt  # 118287 images
 val: /root/2022IEEEUV-preliminary/data/val.txt  # 5000 images
 test: /root/2022IEEEUV-preliminary/data/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+speed: /root/2022IEEEUV-preliminary/data/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
 nc: 8
