@@ -209,6 +209,15 @@ def train(hyp, opt, device, tb_writer=None):
 
         # EMA
         if ema and ckpt.get('ema'):
+            # ckpt['ema'].float().state_dict().pop('model.105.m.0.bias')
+            # ckpt['ema'].float().state_dict().pop('model.105.m.0.weight')
+            # ckpt['ema'].float().state_dict().pop('model.105.m.1.bias')
+            # ckpt['ema'].float().state_dict().pop('model.105.m.1.bias')
+            # ckpt['ema'].float().state_dict().pop('model.105.m.2.weight')
+            # ckpt['ema'].float().state_dict().pop('model.105.m.2.weight')
+            # ckpt['ema'].float().state_dict().pop('model.105.im.0.implicit')
+            # ckpt['ema'].float().state_dict().pop('model.105.im.1.implicit')
+            # ckpt['ema'].float().state_dict().pop('model.105.im.2.implicit')
             ema.ema.load_state_dict(ckpt['ema'].float().state_dict())
             ema.updates = ckpt['updates']
 
@@ -526,11 +535,11 @@ def train(hyp, opt, device, tb_writer=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default='yolo7.pt', help='initial weights path')
+    parser.add_argument('--weights', type=str, default='./yolov7.pt', help='initial weights path')
     parser.add_argument('--cfg', type=str, default='cfg/training/yolov7.yaml', help='model.yaml path')
     parser.add_argument('--data', type=str, default='data/coco.yaml', help='data.yaml path')
     parser.add_argument('--hyp', type=str, default='data/hyp.scratch.p5.yaml', help='hyperparameters path')
-    parser.add_argument('--epochs', type=int, default=200)
+    parser.add_argument('--epochs', type=int, default=300)
     parser.add_argument('--batch-size', type=int, default=4, help='total batch size for all GPUs')
     parser.add_argument('--img-size', nargs='+', type=int, default=[640, 640], help='[train, test] image sizes')
     parser.add_argument('--rect', action='store_true', help='rectangular training')
