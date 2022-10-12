@@ -12,5 +12,5 @@ test: /root/2022IEEEUV-preliminary/data/test.txt  # 20288 of 40670 images, submi
 nc: 8
 
 # class names
-names: [ 'Bacillariophyta', 'Chlorella', 'Chrysophyta', 'Dunaliella_salina',
-         'Platymonas', 'translating_Symbiodinium', 'bleaching_Symbiodinium', 'normal_Symbiodinium' ]
+names: [ '0', '1', '2', '3',
+         '4', '5', '6', '7' ]
