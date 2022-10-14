@@ -169,9 +169,10 @@ def test(data,
                 image_id = int(path.stem) if path.stem.isnumeric() else path.stem
                 box = xyxy2xywh(predn[:, :4])  # xywh
                 box[:, :2] -= box[:, 2:] / 2  # xy center to top-left corner
-                for p, b in zip(pred.tolist(), box.tolist()):
+                for p, b, c in zip(pred.tolist(), box.tolist(), predn[:,5].tolist()):
                     jdict.append({'image_id': image_id,
-                                  'category_id': coco91class[int(p[5])-1] if is_coco else int(p[5])-1,
+                                  # 'category_id': coco91class[int(p[5])-1] if is_coco else int(p[5])-1,
+                                  'category_id': round(c),
                                   'bbox': [round(x, 3) for x in b],
                                   'score': round(p[4], 5)})
 
