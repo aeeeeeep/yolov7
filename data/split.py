@@ -10,7 +10,7 @@ def GetFileList(dir, fileList):
     newDir = dir
     if os.path.isfile(dir):
         last = os.path.splitext(dir)[1]
-        if last == '.jpg' or last == '.xml' or last == '.txt':
+        if last == '.png' or last == '.xml' or last == '.txt':
             fileList.append(dir)
     elif os.path.isdir(dir):
         for s in os.listdir(dir):
@@ -46,13 +46,13 @@ def xyxy2xywhn(size, box):  # 从xml改过来的，改几个位置就行
     return x, y, w, h
 
 
-fileDir = "/home/shuai/HCX/yolo5/mydata/images/"  # 原图片路径
-label_path = "/home/shuai/HCX/yolo5/mydata/labels/"  # 原label的路径
+fileDir = "./train/images/"  # 原图片路径
+label_path = "./train/labels/"  # 原label的路径
 list1 = GetFileList(fileDir, [])
 
-image_save_path_head = "/home/shuai/HCX/yolo5/mydata1/images/"  # 分割后有标注图片储存路径
-image_save_path_tail = ".jpg"
-label_save_path_head = "/home/shuai/HCX/yolo5/mydata1/labels/"  # 标签储存路径
+image_save_path_head = "./train/splitimages/"  # 分割后有标注图片储存路径
+image_save_path_tail = ".png"
+label_save_path_head = "./train/splitlabels/"  # 标签储存路径
 label_save_path_tail = ".txt"
 for i in list1:
     img = cv.imread(i)
