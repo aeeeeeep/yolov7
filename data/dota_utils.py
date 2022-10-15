@@ -143,7 +143,7 @@ def groundtruth2Task1(srcpath, dstpath):
     filelist = GetFileFromThisRootDir(srcpath)
     # names = [custombasename(x.strip())for x in filelist]
     filedict = {}
-    for cls in wordname_15:
+    for cls in wordname_18:
         fd = open(os.path.join(dstpath, 'Task1_') + cls + r'.txt', 'w')
         filedict[cls] = fd
     for filepath in filelist:
