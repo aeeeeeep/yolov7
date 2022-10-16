@@ -145,9 +145,9 @@ def test(data,
             # Append to text file
             if save_txt:
                 gn = torch.tensor(shapes[si][0])[[1, 0, 1, 0]]  # normalization gain whwh
-                for *xyxy, conf, cls, p in zip(predn.tolist(),pred.tolist()):
+                for *xyxy, conf, cls in predn.tolist():
                     xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                    line = (cls, *xywh, round(p[4], 5), conf) if save_conf else (cls, *xywh, round(p[4], 5))  # label format
+                    line = (cls, *xywh, round(conf,5)) if save_conf else (cls, *xywh, round(conf, 5))  # label format
                     with open(save_dir / 'labels' / (path.stem + '.txt'), 'a') as f:
                         f.write(('%g ' * len(line)).rstrip() % line + '\n')
 
@@ -290,10 +290,10 @@ def test(data,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='test.py')
-    parser.add_argument('--weights', nargs='+', type=str, default='/root/2022IEEEUV-preliminary/runs/train/exp3/weights/best.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='/root/2022IEEEUV-preliminary/runs/train/exp2/weights/epoch_298.pt', help='model.pt path(s)')
     parser.add_argument('--data', type=str, default='data/coco.yaml', help='*.data path')
     parser.add_argument('--batch-size', type=int, default=32, help='size of each image batch')
-    parser.add_argument('--img-size', type=int, default=1280, help='inference size (pixels)')
+    parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.65, help='IOU threshold for NMS')
     parser.add_argument('--task', default='test', help='train, val, test, speed or study')
@@ -301,7 +301,7 @@ if __name__ == '__main__':
     parser.add_argument('--single-cls', action='store_true', help='treat as single-class dataset')
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--verbose', action='store_true', help='report mAP by class')
-    parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
+    parser.add_argument('--save-txt', default=True, action='store_true', help='save results to *.txt')
     # parser.add_argument('--save-hybrid', action='store_true', help='save label+prediction hybrid results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
     parser.add_argument('--save-json', action='store_true', help='save a cocoapi-compatible JSON results file')

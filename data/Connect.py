@@ -204,11 +204,11 @@ def getAnchor(image, image_name, txt_dir_path, GIoU=False, DIoU=False, CIoU=Fals
     for keep_box, delete_box in repeat_boxes:
         x1min, y1min, x1max, y1max = txt_data[keep_box][1:5]
         x2min, y2min, x2max, y2max = txt_data[delete_box][1:5]
-        score1 = txt_data[keep_box][6]
-        score2 = txt_data[delete_box][6]
+        score1 = txt_data[keep_box][5]
+        score2 = txt_data[delete_box][5]
         x_pos = np.sort([x1min, x1max, x2min, x2max])
         y_pos = np.sort([y1min, y1max, y2min, y2max])
-        txt_data[keep_box][1:6] = torch.tensor([x_pos[0], y_pos[0], x_pos[3], y_pos[3], (0.5*score1+0.5*score2) ])
+        txt_data[keep_box][1:6] = torch.tensor([x_pos[0], y_pos[0], x_pos[3], y_pos[3], max(score1, score2)])
     #     print(image_name+f' 抑制重复框数量：{len(txt_data)-len(keep)}')
     #     print(txt_data[keep].numpy())
  
@@ -241,7 +241,7 @@ def save_connect_txt(save_txt_path, image, labels, coordinates='x1y1x2y2'):
         #         print('label',label)
         if len(label) == 6:
             data = label[0:5].tolist()
-            data.appned(label[6])
+            data.append(label[5])
         else:
             data = label[0:5].tolist()
         data[:5] = toYolo(data, image.shape[1], image.shape[0]) if coordinates == 'yolo' else data[:5]
