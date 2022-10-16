@@ -7,9 +7,6 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
  
-plt.rcParams['font.family'] = 'SimHei'  # 正常显示中文
-plt.rcParams['axes.unicode_minus'] = False  # 正常显示负号
- 
 import cv2
 from PIL import ImageDraw, Image, ImageFont
  
@@ -139,10 +136,10 @@ def plot_one_box_PIL(box, img, color=None, label=None, line_thickness=None):
     label = label + ' ' + str(confidence) if confidence else label
     if label:
         fontsize = 60
-        font = ImageFont.truetype("font/simsun.ttc", fontsize, encoding="utf-8")
-        txt_width, txt_height = font.getsize(label)
-        draw.rectangle([box[0], box[1] - txt_height + 4, box[0] + txt_width, box[1]], fill=tuple(color))
-        draw.text((box[0], box[1] - txt_height + 1), label, fill=(255, 255, 255), font=font)
+        # font = ImageFont.truetype("font/simsun.ttc", fontsize, encoding="utf-8")
+        # txt_width, txt_height = font.getsize(label)
+        # draw.rectangle([box[0], box[1] - txt_height + 4, box[0] + txt_width, box[1]], fill=tuple(color))
+        # draw.text((box[0], box[1] - txt_height + 1), label, fill=(255, 255, 255), font=font)
     return np.asarray(img)
  
  
@@ -413,7 +410,7 @@ if __name__ == '__main__':
            23: '瓜绢野螟', 24: '豆野螟', 25: '石蛾', 26: '大黑鳃金龟', 27: '干纹冬夜蛾'}
     connect = Connect(rowcol=(4, 4), overlap=0.5, iou_thres=0.35, label_names=bug)
     connect = Connect(windowSize=(2200, 1900), overlap=0.5, iou_thres=0.35, label_names=bug)
-    render_html = connect.showConnectImage('images/00295.jpg', 'la', )
+    render_html = connect.showConnectImage('images/00295.png', 'la', )
     print('浏览器打开：', render_html)
  
     connect.saveConnectImageAndTxt('images', 'la', 'Result', show=True, coordinates='yolo', resize=None,
