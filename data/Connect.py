@@ -204,9 +204,11 @@ def getAnchor(image, image_name, txt_dir_path, GIoU=False, DIoU=False, CIoU=Fals
     for keep_box, delete_box in repeat_boxes:
         x1min, y1min, x1max, y1max = txt_data[keep_box][1:5]
         x2min, y2min, x2max, y2max = txt_data[delete_box][1:5]
+        score1 = txt_data[keep_box][6]
+        score2 = txt_data[delete_box][6]
         x_pos = np.sort([x1min, x1max, x2min, x2max])
         y_pos = np.sort([y1min, y1max, y2min, y2max])
-        txt_data[keep_box][1:5] = torch.tensor([x_pos[0], y_pos[0], x_pos[3], y_pos[3]])
+        txt_data[keep_box][1:6] = torch.tensor([x_pos[0], y_pos[0], x_pos[3], y_pos[3], (0.5*score1+0.5*score2) ])
     #     print(image_name+f' 抑制重复框数量：{len(txt_data)-len(keep)}')
     #     print(txt_data[keep].numpy())
  
@@ -262,7 +264,7 @@ def saveConnect(image_path, image_name, windowSize, rowcol, overlap, iou_thres, 
         sliceWidth, sliceHeight = windowSize
     labels = getAnchor(image, image_name, test_labels_path, sliceWidth=sliceWidth, sliceHeight=sliceHeight,
                        overlap=overlap, iou_thres=iou_thres)
-    labels[:5] = np.round(labels[:5])
+    labels[:6] = np.round(labels[:6])
     image = plot_boxes(image, labels, name=window_name, label_names=label_names, show=show, wait=wait)
  
     if save_imagedir_path:
