@@ -281,7 +281,7 @@ def train(hyp, opt, device, tb_writer=None):
     # Model parameters
     hyp['box'] *= 3. / nl  # scale to layers
     hyp['cls'] *= nc / 80. * 3. / nl  # scale to classes and layers
-    hyp['obj'] *= (imgsz / 640) ** 2 * 3. / nl  # scale to image size and layers
+    hyp['obj'] *= (imgsz / 1280) ** 2 * 3. / nl  # scale to image size and layers
     hyp['label_smoothing'] = opt.label_smoothing
     model.nc = nc  # attach number of classes to model
     model.hyp = hyp  # attach hyperparameters to model
@@ -523,10 +523,10 @@ def train(hyp, opt, device, tb_writer=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default='yolo7.pt', help='initial weights path')
-    parser.add_argument('--cfg', type=str, default='cfg/training/yolov7-d6.yaml', help='model.yaml path')
+    parser.add_argument('--weights', type=str, default='yolo7-e6e.pt', help='initial weights path')
+    parser.add_argument('--cfg', type=str, default='cfg/training/yolov7-e6e.yaml', help='model.yaml path')
     parser.add_argument('--data', type=str, default='data/coco.yaml', help='data.yaml path')
-    parser.add_argument('--hyp', type=str, default='data/hyp.scratch.p5.yaml', help='hyperparameters path')
+    parser.add_argument('--hyp', type=str, default='data/hyp.scratch.p6.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=300)
     parser.add_argument('--batch-size', type=int, default=4, help='total batch size for all GPUs')
     parser.add_argument('--img-size', nargs='+', type=int, default=[1280, 1280], help='[train, test] image sizes')
@@ -539,8 +539,8 @@ if __name__ == '__main__':
     parser.add_argument('--bucket', type=str, default='', help='gsutil bucket')
     parser.add_argument('--cache-images', default=True, action='store_true', help='cache images for faster training')
     parser.add_argument('--image-weights', default=True, action='store_true', help='use weighted image selection for training')
-    parser.add_argument('--device', default='0', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
-    parser.add_argument('--multi-scale', action='store_true', help='vary img-size +/- 50%%')
+    parser.add_argument('--device', default='0,1', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--multi-scale', default=True, action='store_true', help='vary img-size +/- 50%%')
     parser.add_argument('--single-cls', action='store_true', help='train multi-class data as single-class')
     parser.add_argument('--adam', default=True, action='store_true', help='use torch.optim.Adam() optimizer')
     parser.add_argument('--sync-bn', action='store_true', help='use SyncBatchNorm, only available in DDP mode')
@@ -551,7 +551,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', default='exp', help='save to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--quad', action='store_true', help='quad dataloader')
-    parser.add_argument('--linear-lr', default=True, action='store_true', help='linear LR')
+    parser.add_argument('--linear-lr', action='store_true', help='linear LR')
     parser.add_argument('--label-smoothing', type=float, default=0.1, help='Label smoothing epsilon')
     parser.add_argument('--upload_dataset', action='store_true', help='Upload dataset as W&B artifact table')
     parser.add_argument('--bbox_interval', type=int, default=-1, help='Set bounding-box image logging interval for W&B')
