@@ -10,11 +10,11 @@ def gen_train_val(path, ratio):
     for img in imgs:
         if img not in train_imgs:
             val_imgs.append(img)
-    with open('./train.txt', 'a', encoding='utf-8') as f:
+    with open('./try_train.txt', 'a', encoding='utf-8') as f:
         for train_img in train_imgs:
             f.write(os.path.dirname(os.path.abspath(__file__))+'/train/images/'+train_img+'\n')
             # f.write(train_img.split('.')[0]+ '\n')
-    with open('./val.txt', 'a', encoding='utf-8') as f:
+    with open('./try_val.txt', 'a', encoding='utf-8') as f:
         for val_img in val_imgs:
             f.write(os.path.dirname(os.path.abspath(__file__))+'/train/images/'+val_img+'\n')
             # f.write(val_img.split('.')[0]+'\n')

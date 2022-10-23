@@ -473,7 +473,7 @@ def train(hyp, opt, device, tb_writer=None):
                 torch.save(ckpt, last)
                 if best_fitness == fi:
                     torch.save(ckpt, best)
-                if (best_fitness == fi) and (epoch >= 200):
+                if (best_fitness == fi) and (epoch >= 200) and (epoch % 20 == 0):
                     torch.save(ckpt, wdir / 'best_{:03d}.pt'.format(epoch))
                 if epoch == 0:
                     torch.save(ckpt, wdir / 'epoch_{:03d}.pt'.format(epoch))
@@ -537,10 +537,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str, default='./yolov7.pt', help='initial weights path')
     parser.add_argument('--cfg', type=str, default='cfg/training/yolov7.yaml', help='model.yaml path')
-    parser.add_argument('--data', type=str, default='data/coco.yaml', help='data.yaml path')
+    parser.add_argument('--data', type=str, default='data/try_coco.yaml', help='data.yaml path')
     parser.add_argument('--hyp', type=str, default='data/hyp.scratch.p5.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=24)
-    parser.add_argument('--batch-size', type=int, default=8, help='total batch size for all GPUs')
+    parser.add_argument('--batch-size', type=int, default=12, help='total batch size for all GPUs')
     parser.add_argument('--img-size', nargs='+', type=int, default=[640, 640], help='[train, test] image sizes')
     parser.add_argument('--rect', default=True, action='store_true', help='rectangular training')
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
@@ -557,7 +557,7 @@ if __name__ == '__main__':
     parser.add_argument('--adam', default=True, action='store_true', help='use torch.optim.Adam() optimizer')
     parser.add_argument('--sync-bn', action='store_true', help='use SyncBatchNorm, only available in DDP mode')
     parser.add_argument('--local_rank', type=int, default=-1, help='DDP parameter, do not modify')
-    parser.add_argument('--workers', type=int, default=8, help='maximum number of dataloader workers')
+    parser.add_argument('--workers', type=int, default=12, help='maximum number of dataloader workers')
     parser.add_argument('--project', default='runs/train', help='save to project/name')
     parser.add_argument('--entity', default='aeeeeeep', help='W&B entity')
     parser.add_argument('--name', default='exp', help='save to project/name')
